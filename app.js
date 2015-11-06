@@ -65,10 +65,15 @@ function generateBoard(){
 
 }
 
-function isWinner(){console.log(position[0]+"   " +position[1] +"  "+ position[2]);
+function isWinner(){
   if(position[0] == position[1] && position[0] == position[2] ||
      position[3] == position[4] && position[3] == position[5] ||
-     position[6] == position[7] && position[6] == position[8]) {
+     position[6] == position[7] && position[6] == position[8] ||
+     position[0] == position[3] && position[0] == position[6] ||
+     position[1] == position[4] && position[1] == position[7] ||
+     position[2] == position[5] && position[2] == position[8] ||
+     position[0] == position[4] && position[0] == position[8] ||
+     position[2] == position[4] && position[2] == position[6]) {
        return true;
      }
 }
