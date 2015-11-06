@@ -1,7 +1,5 @@
-td button {
-	height:40px;
-	width:40px;
-	font-size:200%;
+table {
+	margin:10px;
 }
 
 td {
@@ -11,8 +9,14 @@ td {
 	text-align:center;
 }
 
+td button {
+	height:40px;
+	width:40px;
+	font-size:200%;
+}
+
 .reset{
 	height:40px;
 	margin-top:10px;
-	font-size:180%;
+	font-size:140%;
 }
