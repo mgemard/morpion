@@ -1,30 +1,34 @@
 var count = 0;
-var current;
 var over = false;
-var position = [0,1,2,3,4,5,6,7,8];
+var square_cross = [];
+var square_circle = [];
+var carreMagic = [2,7,6,9,5,1,4,3,8];
 
-function play(num){
-console.log(over);
+function play(nb){
+//console.log(nb);
+  var current;
+
   if(!over){
-    var elem = document.getElementById("button"+num);
+    var elem = document.getElementById("button"+nb);
     var parent = elem.parentNode;
     parent.removeChild(elem);
 
     if (count == 0) {
       current = "X";
-      position[num] = current;
-    	parent.innerHTML = current;
+      square_cross.push(nb);
+      //console.log(square_cross);
+      parent.innerHTML = current;
       document.getElementById("note").innerHTML = "Next to play: O";
+      over = isWinner(square_cross.slice());
     }
     else {
       current = "O";
-      position[num] = current;
-    	parent.innerHTML = current;
+      square_circle.push(nb);
+      parent.innerHTML = current;
       document.getElementById("note").innerHTML = "Next to play: X";
+      over = isWinner(square_circle.slice());
     }
     count = (count + 1 ) % 2;
-
-    over = isWinner();
     if(over) {
       document.getElementById("note").innerHTML = current + " Won";
     }
@@ -41,7 +45,8 @@ function resetBoard(){
 
   generateBoard();
   over = false;
-  position = [0,1,2,3,4,5,6,7,8];
+  square_cross = [];
+  square_circle = [];
 }
 
 
@@ -52,7 +57,7 @@ function generateBoard(){
   for (var i = 1; i <= 3; i++){
     elem += "<tr>";
     for (var j = 1; j <= 3; j++){
-      elem += "<td><button id=\"button"+num+"\" onclick=\"play('"+num+"')\"></button></td>";
+      elem += "<td><button id=\"button"+carreMagic[num]+"\" onclick=\"play('"+carreMagic[num]+"')\"></button></td>";
       num++;
     }
     elem += "</tr>";
@@ -65,15 +70,18 @@ function generateBoard(){
 
 }
 
-function isWinner(){
-  if(position[0] == position[1] && position[0] == position[2] ||
-     position[3] == position[4] && position[3] == position[5] ||
-     position[6] == position[7] && position[6] == position[8] ||
-     position[0] == position[3] && position[0] == position[6] ||
-     position[1] == position[4] && position[1] == position[7] ||
-     position[2] == position[5] && position[2] == position[8] ||
-     position[0] == position[4] && position[0] == position[8] ||
-     position[2] == position[4] && position[2] == position[6]) {
-       return true;
-     }
+function isWinner(square){
+	for (var i = square.length - 1; i >= 0; i--) {
+		//console.log("i="+ i+ ": ")
+		var firstSquare = square.pop();
+		for (var j = square.length - 1; j >= 0; j--) {
+			var secondSquare = square[j];
+			for (var k = square.length - 2; k >= 0; k--) {
+				if (j != k && parseInt(firstSquare) + parseInt(secondSquare) + parseInt(square[k]) == 15) {
+					return true;
+				}
+			}
+		}
+	}
+	return false;
 }
